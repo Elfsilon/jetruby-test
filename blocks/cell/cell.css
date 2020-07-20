@@ -1,0 +1,9 @@
+.cell {
+	border: 5px solid #00000066;
+	border-radius: 20px;
+	transition: all 0.35s ease-out;
+}
+
+.cell_disabled {
+	opacity: 0;
+}
