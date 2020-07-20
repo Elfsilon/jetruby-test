@@ -1,0 +1,10 @@
+.board {
+	display: flex;
+	flex-flow: row wrap;
+}
+
+.board__cell {
+	margin: 5px;
+	border: 5px solid rgba(0, 0, 0, 0.4);
+	border-radius: 20px;
+}
