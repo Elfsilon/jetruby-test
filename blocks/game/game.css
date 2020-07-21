@@ -2,6 +2,15 @@
 	width: 100%;
 	height: 100vh;
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+}
+
+.game__board {
+	margin-bottom: 35px;
+}
+
+.game__button-back {
+	margin-right: 17px;
 }

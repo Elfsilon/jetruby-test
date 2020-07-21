@@ -1,5 +1,10 @@
 @import url('./base.css');
 
+@import url('./blocks/modal/modal.css');
+@import url('./blocks/text/text.css');
+@import url('./blocks/button/button.css');
 @import url('./blocks/game/game.css');
+@import url('./blocks/menu/menu.css');
 @import url('./blocks/board/board.css');
 @import url('./blocks/cell/cell.css');
+@import url('./blocks/board-settings/board-settings.css');

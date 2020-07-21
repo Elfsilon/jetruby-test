@@ -1,47 +1,42 @@
 class Board {
-	constructor(rowsCount, columnsCount, boardWidth) {
-		this.root = document.createElement('div');
-		this.root.classList.add('board');
-		this.root.style.width = boardWidth + 'px';
-
+	constructor(cellsCount, columnsCount, boardWidth, incSolved, checkFinish) {
+		this.root = null;
 		this.activeCell = null;
-		this.root.addEventListener('click', (e) => {
-			if (
-				!e.target.parentNode.classList.contains('board_blocked') &&
-				!e.target.classList.contains('cell_disabled') &&
-				e.target.classList.contains('cell')
-			) {
-				if (this.activeCell) {
-					e.target.style.backgroundColor = this.colors[e.target.dataset.id].hsl;
-					e.target.parentNode.classList.add('board_blocked');
-					setTimeout(() => {
-						if (e.target.dataset.id == this.activeCell.dataset.id) {
-							console.log('equal');
-							e.target.classList.add('cell_disabled');
-							this.activeCell.classList.add('cell_disabled');
-						} else {
-							e.target.style.backgroundColor = 'white';
-							this.activeCell.style.backgroundColor = 'white';
-						}
-						this.activeCell = null;
-						e.target.parentNode.classList.remove('board_blocked');
-					}, 500);
-				} else {
-					this.activeCell = e.target;
-					this.activeCell.style.backgroundColor = this.colors[e.target.dataset.id].hsl;
-				}
-			}
-		});
-
+		this.checkFinish = checkFinish;
+		this.incSolved = incSolved;
+		this.boardWidth = boardWidth;
 		this.cellBorderSize = 5;
 		this.cellMargin = 5;
-		this.cellsCount = rowsCount * columnsCount;
-		let cellAdditionalSpace = this.cellBorderSize + this.cellMargin;
-
+		this.cellsCount = cellsCount;
 		this.colors = this.pickColors(this.cellsCount / 2);
+
+		let cellAdditionalSpace = this.cellBorderSize + this.cellMargin;
 		this.cellSize = (boardWidth - columnsCount * cellAdditionalSpace) / columnsCount;
 
 		return this.render();
+	}
+
+	selectCell(target) {
+		if (this.activeCell) {
+			target.style.backgroundColor = this.colors[target.dataset.id].hsl;
+			target.parentNode.classList.add('board_blocked');
+			setTimeout(() => {
+				if (target.dataset.id == this.activeCell.dataset.id) {
+					target.classList.add('cell_disabled');
+					this.activeCell.classList.add('cell_disabled');
+					this.incSolved();
+				} else {
+					target.style.backgroundColor = 'white';
+					this.activeCell.style.backgroundColor = 'white';
+				}
+				this.activeCell = null;
+				target.parentNode.classList.remove('board_blocked');
+				this.checkFinish();
+			}, 500);
+		} else {
+			this.activeCell = target;
+			this.activeCell.style.backgroundColor = this.colors[target.dataset.id].hsl;
+		}
 	}
 
 	pickColors(count) {
@@ -64,14 +59,36 @@ class Board {
 		return colors;
 	}
 
-	render() {
+	createCells() {
 		let cellColors = this.colors.concat(this.colors);
 		cellColors = shuffleArray(cellColors);
+		const res = [];
 
 		for (let i = 0; i < this.cellsCount; i++) {
 			const cell = new Cell(this.cellSize);
 			cell.classList.add('board__cell');
 			cell.dataset.id = cellColors[i].id;
+			res.push(cell);
+		}
+
+		return res;
+	}
+
+	render() {
+		this.root = document.createElement('div');
+		this.root.classList.add('board');
+		this.root.style.width = this.boardWidth + 'px';
+		this.root.addEventListener('click', (e) => {
+			if (
+				!e.target.parentNode.classList.contains('board_blocked') &&
+				!e.target.classList.contains('cell_disabled') &&
+				e.target.classList.contains('cell')
+			) {
+				this.selectCell(e.target);
+			}
+		});
+
+		for (const cell of this.createCells()) {
 			this.root.append(cell);
 		}
 

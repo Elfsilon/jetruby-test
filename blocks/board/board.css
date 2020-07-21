@@ -1,6 +1,11 @@
 .board {
 	display: flex;
 	flex-flow: row wrap;
+	justify-content: center;
+}
+
+.board__wrapper {
+	text-align: center;
 }
 
 .board__cell {

@@ -1,0 +1,23 @@
+.text {
+	color: #5e5e5e;
+}
+
+.text_fs_xs {
+	font-size: 20px;
+}
+
+.text_fs_s {
+	font-size: 25px;
+}
+
+.text_fs_m {
+	font-size: 40px;
+}
+
+.text_fs_l {
+	font-size: 50px;
+}
+
+.text_col_bright {
+	color: #828282;
+}

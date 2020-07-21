@@ -1,0 +1,17 @@
+.menu {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.menu__caption {
+	margin-bottom: 52px;
+}
+
+.menu__text {
+	margin-bottom: 6px;
+}
+
+.menu__change-size-button {
+	margin-bottom: 52px;
+}

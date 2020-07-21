@@ -1,0 +1,40 @@
+.board-settings {
+	background-color: white;
+	border-radius: 20px;
+	padding: 35px 50px;
+	display: flex;
+	height: 406px;
+}
+
+.board-settings__board {
+	width: 306px;
+	margin-right: 50px;
+}
+
+.board-settings__cell {
+	width: 30px;
+	height: 30px;
+	border-radius: 7px;
+	border-width: 2px;
+	margin: 2px;
+}
+
+.board-settings__info {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.board-settings__caption {
+	margin-bottom: 4px;
+}
+
+.board-settings__size {
+	margin-bottom: 28px;
+}
+
+.board-settings__cell_highlight {
+	border-color: #10cde7;
+}

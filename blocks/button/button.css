@@ -1,0 +1,40 @@
+.button {
+	color: #5e5e5e;
+	border-color: #5e5e5e;
+	border-style: solid;
+	background: none;
+	cursor: pointer;
+	outline: none;
+	transition: all 0.35s ease;
+}
+
+.button:hover {
+	border-color: #10cde7;
+	color: #10cde7;
+}
+
+.button_size_s {
+	padding: 11px 23px;
+	border-width: 3px;
+	border-radius: 20px;
+	font-size: 25px;
+}
+
+.button_size_m {
+	padding: 12px 43px;
+	border-width: 5px;
+	border-radius: 25px;
+	font-size: 30px;
+}
+
+.button_size_l {
+	padding: 14px 63px;
+	border-width: 5px;
+	border-radius: 30px;
+	font-size: 35px;
+}
+
+.button_bright {
+	color: #b8b8b8;
+	border-color: #b8b8b8;
+}
