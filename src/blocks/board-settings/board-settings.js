@@ -15,20 +15,24 @@ class BoardSettingsWindow {
 			if (this.cells[i].classList.contains('board-settings__cell_highlight')) {
 				this.cells[i].classList.remove('board-settings__cell_highlight');
 			}
-			if (this.cells[i].dataset.row <= curRow && this.cells[i].dataset.col <= curCol) {
+			// if (this.cells[i].dataset.row <= curRow && this.cells[i].dataset.col <= curCol) {
+			if (this.cells[i].getAttribute('data-row') <= curRow && this.cells[i].getAttribute('data-col') <= curCol) {
 				this.cells[i].classList.add('board-settings__cell_highlight');
 			}
 		}
 	}
 
 	highlightPreviousRect() {
-		this.highlightRect(this.selectedCell.dataset.row, this.selectedCell.dataset.col);
+		// this.highlightRect(this.selectedCell.dataset.row, this.selectedCell.dataset.col);
+		this.highlightRect(this.selectedCell.getAttribute('data-row'), this.selectedCell.getAttribute('data-col'));
 	}
 
 	selectSize(target) {
 		this.selectedCell = target;
-		this.boardRows = +target.dataset.row + 1;
-		this.boardCols = +target.dataset.col + 1;
+		// this.boardRows = +target.dataset.row + 1;
+		// this.boardCols = +target.dataset.col + 1;
+		this.boardRows = +target.getAttribute('data-row') + 1;
+		this.boardCols = +target.getAttribute('data-col') + 1;
 		this.sizeNode.textContent = `${this.boardRows}x${this.boardCols}`;
 	}
 
@@ -44,7 +48,9 @@ class BoardSettingsWindow {
 		const board = document.createElement('div');
 		board.classList.add('board-settings__board', 'board');
 		board.addEventListener('mousemove', (e) => {
-			if (e.target.classList.contains('board-settings__cell')) this.highlightRect(e.target.dataset.row, e.target.dataset.col);
+			// if (e.target.classList.contains('board-settings__cell')) this.highlightRect(e.target.dataset.row, e.target.dataset.col);
+			if (e.target.classList.contains('board-settings__cell'))
+				this.highlightRect(e.target.getAttribute('data-row'), e.target.getAttribute('data-col'));
 		});
 		board.addEventListener('mouseleave', () => this.highlightPreviousRect());
 		board.addEventListener('click', (e) => {
@@ -55,8 +61,10 @@ class BoardSettingsWindow {
 			for (let j = 0; j < 9; j++) {
 				const cell = document.createElement('div');
 				cell.classList.add('board-settings__cell', 'cell');
-				cell.dataset.row = i;
-				cell.dataset.col = j;
+				// cell.dataset.row = i;
+				// cell.dataset.col = j;
+				cell.setAttribute('data-row', i);
+				cell.setAttribute('data-col', j);
 				if (i < 4 && j < 4) cell.classList.add('board-settings__cell_highlight');
 				if (i == 3 && j == 3) this.selectedCell = cell;
 				board.append(cell);
