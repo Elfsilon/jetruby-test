@@ -21,3 +21,21 @@
 .text_col_bright {
 	color: #828282;
 }
+
+@media screen and (max-width: 600px) {
+	.text_fs_xs {
+		font-size: 14px;
+	}
+
+	.text_fs_s {
+		font-size: 18px;
+	}
+
+	.text_fs_m {
+		font-size: 25px;
+	}
+
+	.text_fs_l {
+		font-size: 30px;
+	}
+}

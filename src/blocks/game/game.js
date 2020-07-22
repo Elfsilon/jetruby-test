@@ -72,8 +72,17 @@ class Game {
 		this.root.append(this.menu);
 	}
 
-	setBoardWidth(value) {
-		this.settings.boardWidth = value;
+	/**
+	 * Calculates board width considering the width and height of the viewport, count of board columns and rows
+	 */
+	setBoardWidth(minBoardFactor, maxBoardFactor) {
+		let minWH = Math.min(this.settings.gameWidth, this.settings.gameHeight);
+		let step = (maxBoardFactor - minBoardFactor) / 7;
+		let colsFactor = this.settings.boardCols - 2;
+		let rowsFactor = 9 - this.settings.boardRows;
+		let factor = Math.min(minBoardFactor + step * (colsFactor + rowsFactor * 0.5), maxBoardFactor);
+
+		this.settings.boardWidth = minWH * factor;
 	}
 
 	openBoardSettings() {
@@ -87,6 +96,7 @@ class Game {
 
 	startGame() {
 		this.refreshState();
+		this.setBoardWidth(0.15, 0.6);
 		this.root.innerHTML = '';
 		const board = new Board(
 			this.settings.boardCellsCount,
@@ -121,7 +131,6 @@ class Game {
 		this.root.style.width = this.settings.gameWidth + 'px';
 		this.root.style.height = this.settings.gameHeight + 'px';
 
-		this.setBoardWidth(Math.min(this.settings.gameWidth, this.settings.gameHeight) * 0.6);
 		this.root.append(this.menu);
 
 		return this.root;

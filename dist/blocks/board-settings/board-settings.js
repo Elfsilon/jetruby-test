@@ -23,32 +23,36 @@ var BoardSettingsWindow = /*#__PURE__*/function () {
   _createClass(BoardSettingsWindow, [{
     key: "highlightRect",
     value: function highlightRect(curRow, curCol) {
+      var highlightColor = curRow >= 1 && curCol >= 1 ? 'board-settings__cell_highlight' : 'board-settings__cell_highlight_wrong';
+
       for (var i = 0; i < this.cells.length; i++) {
         if (this.cells[i].classList.contains('board-settings__cell_highlight')) {
           this.cells[i].classList.remove('board-settings__cell_highlight');
-        } // if (this.cells[i].dataset.row <= curRow && this.cells[i].dataset.col <= curCol) {
+        }
 
+        if (this.cells[i].classList.contains('board-settings__cell_highlight_wrong')) {
+          this.cells[i].classList.remove('board-settings__cell_highlight_wrong');
+        }
 
         if (this.cells[i].getAttribute('data-row') <= curRow && this.cells[i].getAttribute('data-col') <= curCol) {
-          this.cells[i].classList.add('board-settings__cell_highlight');
+          this.cells[i].classList.add(highlightColor);
         }
       }
     }
   }, {
     key: "highlightPreviousRect",
     value: function highlightPreviousRect() {
-      // this.highlightRect(this.selectedCell.dataset.row, this.selectedCell.dataset.col);
       this.highlightRect(this.selectedCell.getAttribute('data-row'), this.selectedCell.getAttribute('data-col'));
     }
   }, {
     key: "selectSize",
-    value: function selectSize(target) {
-      this.selectedCell = target; // this.boardRows = +target.dataset.row + 1;
-      // this.boardCols = +target.dataset.col + 1;
-
-      this.boardRows = +target.getAttribute('data-row') + 1;
-      this.boardCols = +target.getAttribute('data-col') + 1;
-      this.sizeNode.textContent = "".concat(this.boardRows, "x").concat(this.boardCols);
+    value: function selectSize(target, i, j) {
+      if (i >= 1 && j >= 1) {
+        this.selectedCell = target;
+        this.boardRows = +target.getAttribute('data-row') + 1;
+        this.boardCols = +target.getAttribute('data-col') + 1;
+        this.sizeNode.textContent = "".concat(this.boardRows, "x").concat(this.boardCols);
+      }
     }
   }, {
     key: "apply",
@@ -66,25 +70,23 @@ var BoardSettingsWindow = /*#__PURE__*/function () {
       var board = document.createElement('div');
       board.classList.add('board-settings__board', 'board');
       board.addEventListener('mousemove', function (e) {
-        // if (e.target.classList.contains('board-settings__cell')) this.highlightRect(e.target.dataset.row, e.target.dataset.col);
         if (e.target.classList.contains('board-settings__cell')) _this.highlightRect(e.target.getAttribute('data-row'), e.target.getAttribute('data-col'));
       });
       board.addEventListener('mouseleave', function () {
         return _this.highlightPreviousRect();
       });
       board.addEventListener('click', function (e) {
-        if (e.target.classList.contains('board-settings__cell')) _this.selectSize(e.target);
+        if (e.target.classList.contains('board-settings__cell')) _this.selectSize(e.target, e.target.getAttribute('data-row'), e.target.getAttribute('data-col'));
       });
 
       for (var i = 0; i < 9; i++) {
         for (var j = 0; j < 9; j++) {
           var cell = document.createElement('div');
-          cell.classList.add('board-settings__cell', 'cell'); // cell.dataset.row = i;
-          // cell.dataset.col = j;
-
+          cell.classList.add('board-settings__cell', 'cell');
           cell.setAttribute('data-row', i);
           cell.setAttribute('data-col', j);
           if (i < 4 && j < 4) cell.classList.add('board-settings__cell_highlight');
+          if (window.innerWidth <= 600 && (i > 5 || j > 5)) cell.classList.add('board-settings__cell_disabled');
           if (i == 3 && j == 3) this.selectedCell = cell;
           board.append(cell);
         }

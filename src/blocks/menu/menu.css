@@ -15,3 +15,17 @@
 .menu__change-size-button {
 	margin-bottom: 52px;
 }
+
+@media screen and (max-width: 600px) {
+	.menu__caption {
+		margin-bottom: 32px;
+	}
+
+	.menu__text {
+		margin-bottom: 4px;
+	}
+
+	.menu__change-size-button {
+		margin-bottom: 32px;
+	}
+}

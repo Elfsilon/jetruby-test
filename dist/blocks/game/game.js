@@ -79,10 +79,19 @@ var Game = /*#__PURE__*/function () {
       this.root.innerHTML = '';
       this.root.append(this.menu);
     }
+    /**
+     * Calculates board width considering the width and height of the viewport, count of board columns and rows
+     */
+
   }, {
     key: "setBoardWidth",
-    value: function setBoardWidth(value) {
-      this.settings.boardWidth = value;
+    value: function setBoardWidth(minBoardFactor, maxBoardFactor) {
+      var minWH = Math.min(this.settings.gameWidth, this.settings.gameHeight);
+      var step = (maxBoardFactor - minBoardFactor) / 7;
+      var colsFactor = this.settings.boardCols - 2;
+      var rowsFactor = 9 - this.settings.boardRows;
+      var factor = Math.min(minBoardFactor + step * (colsFactor + rowsFactor * 0.5), maxBoardFactor);
+      this.settings.boardWidth = minWH * factor;
     }
   }, {
     key: "openBoardSettings",
@@ -101,6 +110,7 @@ var Game = /*#__PURE__*/function () {
       var _this = this;
 
       this.refreshState();
+      this.setBoardWidth(0.15, 0.6);
       this.root.innerHTML = '';
       var board = new Board(this.settings.boardCellsCount, this.settings.boardCols, this.settings.boardWidth, this.incSolved, this.checkFinish);
       board.classList.add('game__board');
@@ -129,7 +139,6 @@ var Game = /*#__PURE__*/function () {
       this.root.classList.add('game');
       this.root.style.width = this.settings.gameWidth + 'px';
       this.root.style.height = this.settings.gameHeight + 'px';
-      this.setBoardWidth(Math.min(this.settings.gameWidth, this.settings.gameHeight) * 0.6);
       this.root.append(this.menu);
       return this.root;
     }

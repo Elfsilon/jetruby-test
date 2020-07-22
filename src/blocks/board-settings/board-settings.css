@@ -38,3 +38,57 @@
 .board-settings__cell_highlight {
 	border-color: #10cde7;
 }
+
+.board-settings__cell_highlight_wrong {
+	border-color: #e71034;
+}
+
+.board-settings__cell_disabled {
+	display: none;
+}
+
+@media screen and (max-width: 600px) {
+	.board-settings {
+		background-color: white;
+		border-radius: 20px;
+		padding: 20px 30px;
+		display: flex;
+		height: 244px;
+	}
+
+	.board-settings__board {
+		width: 204px;
+		margin-right: 30px;
+	}
+
+	.board-settings__caption {
+		margin-bottom: 3px;
+	}
+
+	.board-settings__size {
+		margin-bottom: 18px;
+	}
+}
+
+@media screen and (max-width: 380px) {
+	.board-settings {
+		background-color: white;
+		border-radius: 20px;
+		padding: 10px 15px;
+		display: flex;
+		height: 224px;
+	}
+
+	.board-settings__board {
+		width: 204px;
+		margin-right: 10px;
+	}
+
+	.board-settings__caption {
+		margin-bottom: 3px;
+	}
+
+	.board-settings__size {
+		margin-bottom: 18px;
+	}
+}
