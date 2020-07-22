@@ -27,7 +27,7 @@ var Board = /*#__PURE__*/function () {
     this.columnsCount = columnsCount;
     this.rowsCount = cellsCount / columnsCount;
     this.colors = this.pickColors(Math.floor(this.cellsCount / 2 + 0.5));
-    var cellAdditionalSpace = this.cellBorderSize + this.cellMargin;
+    var cellAdditionalSpace = this.cellBorderSize + this.cellMargin + 0.5;
     this.cellSize = (boardWidth - columnsCount * cellAdditionalSpace) / columnsCount;
     return this.render();
   }

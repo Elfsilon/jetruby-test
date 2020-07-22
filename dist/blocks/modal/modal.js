@@ -22,6 +22,7 @@ var Modal = /*#__PURE__*/function () {
       if (this.root.innerHTML) this.close();
       this.root.append(component);
       this.root.classList.remove('modal_hidden');
+      Effect.riseEffect(this.root);
     }
   }, {
     key: "close",
@@ -34,6 +35,7 @@ var Modal = /*#__PURE__*/function () {
     value: function render() {
       this.root = document.createElement('div');
       this.root.classList.add('modal', 'modal_hidden');
+      this.root.append(this.content);
       document.body.append(this.root);
     }
   }]);

@@ -10,6 +10,7 @@ class Modal {
 		if (this.root.innerHTML) this.close();
 		this.root.append(component);
 		this.root.classList.remove('modal_hidden');
+		Effect.riseEffect(this.root);
 	}
 
 	close() {
@@ -20,6 +21,7 @@ class Modal {
 	render() {
 		this.root = document.createElement('div');
 		this.root.classList.add('modal', 'modal_hidden');
+		this.root.append(this.content);
 		document.body.append(this.root);
 	}
 }

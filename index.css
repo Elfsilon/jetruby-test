@@ -1,5 +1,6 @@
 @import url('./base.css');
 
+@import url('./src/blocks/effect/effect.css');
 @import url('./src/blocks/modal/modal.css');
 @import url('./src/blocks/text/text.css');
 @import url('./src/blocks/button/button.css');

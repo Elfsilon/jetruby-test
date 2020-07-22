@@ -33,8 +33,7 @@ var Game = /*#__PURE__*/function () {
     this.incSolved = this.incSolved.bind(this);
     this.checkFinish = this.checkFinish.bind(this);
     this.modal = new Modal();
-    this.boardSettingsWindow = new BoardSettingsWindow(this.settings.boardRows, this.settings.boardCols, this.setBoardSize, this.modal.close);
-    this.menu = new Menu(this.openBoardSettings, this.startGame);
+    this.boardSettingsWindow = null;
     return this.render();
   }
 
@@ -56,6 +55,8 @@ var Game = /*#__PURE__*/function () {
   }, {
     key: "showFinalMessage",
     value: function showFinalMessage() {
+      var _this = this;
+
       var wrapper = document.createElement('div');
       wrapper.classList.add('board__wrapper');
       var caption = document.createElement('h2');
@@ -67,6 +68,9 @@ var Game = /*#__PURE__*/function () {
       this.boardNode.innerHTML = '';
       wrapper.append(caption, subtitle);
       this.boardNode.append(wrapper);
+      setTimeout(function () {
+        Effect.riseEffect(_this.boardNode);
+      }, 1000);
     }
   }, {
     key: "setBoardSize",
@@ -96,19 +100,23 @@ var Game = /*#__PURE__*/function () {
   }, {
     key: "openBoardSettings",
     value: function openBoardSettings() {
+      this.boardSettingsWindow = new BoardSettingsWindow(this.settings.boardRows, this.settings.boardCols, this.setBoardSize, this.modal.close);
       this.modal.open(this.boardSettingsWindow);
     }
   }, {
     key: "openMenu",
     value: function openMenu() {
+      this.menu = new Menu(this.openBoardSettings, this.startGame, this.settings.boardRows, this.settings.boardCols);
       this.root.innerHTML = '';
       this.root.append(this.menu);
+      Effect.riseEffect(this.menu);
     }
   }, {
     key: "startGame",
     value: function startGame() {
-      var _this = this;
+      var _this2 = this;
 
+      Effect.fadeEffect(this.menu);
       this.refreshState();
       this.setBoardWidth(0.15, 0.6);
       this.root.innerHTML = '';
@@ -121,16 +129,17 @@ var Game = /*#__PURE__*/function () {
       backToMenuButton.classList.add('game__button-back', 'button', 'button_size_m', 'button_bright');
       backToMenuButton.textContent = 'Menu';
       backToMenuButton.addEventListener('click', function () {
-        return _this.openMenu();
+        return _this2.openMenu();
       });
       var restartButton = document.createElement('button');
       restartButton.classList.add('button', 'button_size_m', 'button_bright');
       restartButton.textContent = 'Restart';
       restartButton.addEventListener('click', function () {
-        return _this.startGame();
+        return _this2.startGame();
       });
       wrapper.append(backToMenuButton, restartButton);
       this.root.append(board, wrapper);
+      Effect.riseEffect(this.boardNode);
     }
   }, {
     key: "render",
@@ -139,7 +148,7 @@ var Game = /*#__PURE__*/function () {
       this.root.classList.add('game');
       this.root.style.width = this.settings.gameWidth + 'px';
       this.root.style.height = this.settings.gameHeight + 'px';
-      this.root.append(this.menu);
+      this.openMenu();
       return this.root;
     }
   }]);

@@ -22,13 +22,7 @@ class Game {
 		this.checkFinish = this.checkFinish.bind(this);
 
 		this.modal = new Modal();
-		this.boardSettingsWindow = new BoardSettingsWindow(
-			this.settings.boardRows,
-			this.settings.boardCols,
-			this.setBoardSize,
-			this.modal.close
-		);
-		this.menu = new Menu(this.openBoardSettings, this.startGame);
+		this.boardSettingsWindow = null;
 
 		return this.render();
 	}
@@ -60,6 +54,9 @@ class Game {
 		this.boardNode.innerHTML = '';
 		wrapper.append(caption, subtitle);
 		this.boardNode.append(wrapper);
+		setTimeout(() => {
+			Effect.riseEffect(this.boardNode);
+		}, 1000);
 	}
 
 	setBoardSize(rows, cols) {
@@ -86,15 +83,24 @@ class Game {
 	}
 
 	openBoardSettings() {
+		this.boardSettingsWindow = new BoardSettingsWindow(
+			this.settings.boardRows,
+			this.settings.boardCols,
+			this.setBoardSize,
+			this.modal.close
+		);
 		this.modal.open(this.boardSettingsWindow);
 	}
 
 	openMenu() {
+		this.menu = new Menu(this.openBoardSettings, this.startGame, this.settings.boardRows, this.settings.boardCols);
 		this.root.innerHTML = '';
 		this.root.append(this.menu);
+		Effect.riseEffect(this.menu);
 	}
 
 	startGame() {
+		Effect.fadeEffect(this.menu);
 		this.refreshState();
 		this.setBoardWidth(0.15, 0.6);
 		this.root.innerHTML = '';
@@ -123,6 +129,7 @@ class Game {
 
 		wrapper.append(backToMenuButton, restartButton);
 		this.root.append(board, wrapper);
+		Effect.riseEffect(this.boardNode);
 	}
 
 	render() {
@@ -131,8 +138,7 @@ class Game {
 		this.root.style.width = this.settings.gameWidth + 'px';
 		this.root.style.height = this.settings.gameHeight + 'px';
 
-		this.root.append(this.menu);
-
+		this.openMenu();
 		return this.root;
 	}
 }

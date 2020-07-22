@@ -12,7 +12,7 @@ class Board {
 		this.rowsCount = cellsCount / columnsCount;
 		this.colors = this.pickColors(Math.floor(this.cellsCount / 2 + 0.5));
 
-		let cellAdditionalSpace = this.cellBorderSize + this.cellMargin;
+		let cellAdditionalSpace = this.cellBorderSize + this.cellMargin + 0.5;
 		this.cellSize = (boardWidth - columnsCount * cellAdditionalSpace) / columnsCount;
 
 		return this.render();
