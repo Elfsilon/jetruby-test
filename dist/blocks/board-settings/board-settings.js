@@ -23,7 +23,7 @@ var BoardSettingsWindow = /*#__PURE__*/function () {
   _createClass(BoardSettingsWindow, [{
     key: "highlightRect",
     value: function highlightRect(curRow, curCol) {
-      var highlightColor = curRow >= 1 && curCol >= 1 ? 'board-settings__cell_highlight' : 'board-settings__cell_highlight_wrong';
+      var highlightColor = curRow % 2 != 0 || curCol % 2 != 0 ? 'board-settings__cell_highlight' : 'board-settings__cell_highlight_wrong';
 
       for (var i = 0; i < this.cells.length; i++) {
         if (this.cells[i].classList.contains('board-settings__cell_highlight')) {
@@ -46,8 +46,8 @@ var BoardSettingsWindow = /*#__PURE__*/function () {
     }
   }, {
     key: "selectSize",
-    value: function selectSize(target, i, j) {
-      if (i >= 1 && j >= 1) {
+    value: function selectSize(target, curRow, curCol) {
+      if (curRow % 2 != 0 || curCol % 2 != 0) {
         this.selectedCell = target;
         this.boardRows = +target.getAttribute('data-row') + 1;
         this.boardCols = +target.getAttribute('data-col') + 1;
@@ -79,8 +79,8 @@ var BoardSettingsWindow = /*#__PURE__*/function () {
         if (e.target.classList.contains('board-settings__cell')) _this.selectSize(e.target, e.target.getAttribute('data-row'), e.target.getAttribute('data-col'));
       });
 
-      for (var i = 0; i < 9; i++) {
-        for (var j = 0; j < 9; j++) {
+      for (var i = 0; i < 8; i++) {
+        for (var j = 0; j < 8; j++) {
           var cell = document.createElement('div');
           cell.classList.add('board-settings__cell', 'cell');
           cell.setAttribute('data-row', i);

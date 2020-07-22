@@ -46,16 +46,16 @@ class Board {
 
 	pickColors(count) {
 		const colors = [];
-		for (let i = 0; i < 41; i++) {
+		for (let i = 0; i < 32; i++) {
 			let brightness;
-			if (i < 11) brightness = 50;
-			if (i >= 11 && i < 22) brightness = 40;
-			if (i >= 22 && i < 33) brightness = 30;
-			if (i >= 33 && i < 41) brightness = 20;
+			if (i < 8) brightness = 50;
+			if (i >= 8 && i < 16) brightness = 36;
+			if (i >= 16 && i < 24) brightness = 22;
+			if (i >= 24 && i < 32) brightness = 8;
 
 			colors.push({
 				id: i,
-				hsl: `hsl(${32 * i}, 90%, ${brightness}%)`,
+				hsl: `hsl(${45 * i}, 90%, ${brightness}%)`,
 			});
 		}
 		return colors.slice(0, count);
