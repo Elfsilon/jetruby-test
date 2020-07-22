@@ -1,0 +1,11 @@
+.transform_translate_left {
+	transform: translateX(-100vw);
+}
+
+.transform_translate_right {
+	transform: translateX(100vw);
+}
+
+.transform_translate_top {
+	transform: translateY(-100vh);
+}

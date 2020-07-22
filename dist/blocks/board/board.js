@@ -24,7 +24,9 @@ var Board = /*#__PURE__*/function () {
     this.cellBorderSize = 5;
     this.cellMargin = 5;
     this.cellsCount = cellsCount;
-    this.colors = this.pickColors(this.cellsCount / 2);
+    this.columnsCount = columnsCount;
+    this.rowsCount = cellsCount / columnsCount;
+    this.colors = this.pickColors(Math.floor(this.cellsCount / 2 + 0.5));
     var cellAdditionalSpace = this.cellBorderSize + this.cellMargin;
     this.cellSize = (boardWidth - columnsCount * cellAdditionalSpace) / columnsCount;
     return this.render();
@@ -36,12 +38,10 @@ var Board = /*#__PURE__*/function () {
       var _this = this;
 
       if (this.activeCell) {
-        // target.style.backgroundColor = this.colors[target.dataset.id].hsl;
-        target.style.backgroundColor = this.colors[target.getAttribute('data-id')].hsl;
+        target.style.backgroundColor = this.colors[target.getAttribute('data-color-id')].hsl;
         target.parentNode.classList.add('board_blocked');
         setTimeout(function () {
-          // if (target.dataset.id == this.activeCell.dataset.id) {
-          if (target.getAttribute('data-id') == _this.activeCell.getAttribute('data-id')) {
+          if (target.getAttribute('data-id') != _this.activeCell.getAttribute('data-id') && target.getAttribute('data-color-id') == _this.activeCell.getAttribute('data-color-id')) {
             target.classList.add('cell_disabled');
 
             _this.activeCell.classList.add('cell_disabled');
@@ -58,9 +58,8 @@ var Board = /*#__PURE__*/function () {
           _this.checkFinish();
         }, 500);
       } else {
-        this.activeCell = target; // this.activeCell.style.backgroundColor = this.colors[target.dataset.id].hsl;
-
-        this.activeCell.style.backgroundColor = this.colors[target.getAttribute('data-id')].hsl;
+        this.activeCell = target;
+        this.activeCell.style.backgroundColor = this.colors[target.getAttribute('data-color-id')].hsl;
       }
     }
   }, {
@@ -68,23 +67,19 @@ var Board = /*#__PURE__*/function () {
     value: function pickColors(count) {
       var colors = [];
 
-      if (count <= 14) {
-        for (var i = 0; i < count; i++) {
-          colors.push({
-            id: i,
-            hsl: "hsl(".concat(25 * i, ", 90%, 50%)")
-          });
-        }
-      } else {
-        for (var _i = 0; _i < count; _i++) {
-          colors.push({
-            id: _i,
-            hsl: "hsl(".concat(10 * _i, ", 90%, 50%)")
-          });
-        }
+      for (var i = 0; i < 41; i++) {
+        var brightness = void 0;
+        if (i < 11) brightness = 50;
+        if (i >= 11 && i < 22) brightness = 40;
+        if (i >= 22 && i < 33) brightness = 30;
+        if (i >= 33 && i < 41) brightness = 20;
+        colors.push({
+          id: i,
+          hsl: "hsl(".concat(32 * i, ", 90%, ").concat(brightness, "%)")
+        });
       }
 
-      return colors;
+      return colors.slice(0, count);
     }
   }, {
     key: "createCells",
@@ -95,9 +90,10 @@ var Board = /*#__PURE__*/function () {
 
       for (var i = 0; i < this.cellsCount; i++) {
         var cell = new Cell(this.cellSize);
-        cell.classList.add('board__cell'); // cell.dataset.id = cellColors[i].id;
-
-        cell.setAttribute('data-id', cellColors[i].id);
+        cell.classList.add('board__cell');
+        if (this.columnsCount > 4 || this.rowsCount > 4) cell.classList.add('cell_border_s');
+        cell.setAttribute('data-color-id', cellColors[i].id);
+        cell.setAttribute('data-id', i);
         res.push(cell);
       }
 
